@@ -14,7 +14,7 @@ int main()
     printf("arr[3]=%d 3[arr]=%d \n",arr[3],3[arr]);
     pass_array_to_function(arr);
 
-    arr++;  //arr=arr+1 // not allowed //arrays base address is locked by compiler
+    //arr++;  //arr=arr+1 // not allowed //arrays base address is locked by compiler
 }
 
 void pass_array_to_function(int *p) //(int p[5]) 
