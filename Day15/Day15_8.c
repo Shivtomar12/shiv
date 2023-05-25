@@ -4,7 +4,7 @@
 
 int main()
 {
-    char ch;
+    char buffer[80];
     FILE *fileptr;
     fileptr = fopen("Day15_1.c","r");
 
@@ -15,12 +15,13 @@ int main()
     }
 
     //read file sequentially
-    printf("Cuurent file position = %ld\n",ftell(fileptr));
+    printf("Current file position = %ld\n",ftell(fileptr));
 
-    while((ch = fgetc(fileptr))!=EOF)
+    while(fgets(buffer,sizeof(buffer),fileptr)!=NULL)
     {
-        printf("%c %ld \n",ch,ftell(fileptr)); //fputc(ch,stdout); //printf("%c",ch);
+        printf("%s",buffer); 
     }
 
     fclose(fileptr);
+    return 0;
 }
