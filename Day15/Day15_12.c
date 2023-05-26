@@ -1,3 +1,5 @@
+#include<stdio.h>
+
 typedef struct
 {
     int rollno;
@@ -36,9 +38,36 @@ void accept_student_data(STUDENT *p)
     scanf("%d",&p->marks);
 
 }
+void write_student_data_to_file(const STUDENT *p)
+{
+    FILE *fileptr;
+    fileptr = fopen("student.dat","ab");
+    if(fileptr!=NULL)
+    {
+        //fprintf(fileptr,"%d %s %d \n",p->rollno,p->sname,p->marks);
+        fwrite(p,sizeof(STUDENT),1,fileptr);
+        fclose(fileptr);
+    }
+}
+
+void read_all_records_from_file()
+{
+    STUDENT s;
+    FILE *fileptr;
+    fileptr = fopen("student.dat","rb");
+    if(fileptr!=NULL)
+    {//from file assocaiated fileptr please read 28 bytes of 1 element at a time
+    //and store it at the location of s
+        while(fread(&s,sizeof(STUDENT),1,fileptr) !=0)
+        {
+            display_student_data(&s);
+        }
+        fclose(fileptr);
+    }
+}
 int main()
 {
-    STUDENT s1 ={11,"aaa",56};
+    STUDENT s1;
     MENU mchoice;
     while((mchoice = menu_choice())!=EXIT)
     {
@@ -46,9 +75,10 @@ int main()
         {
             case ADDSTUDENT:
                             accept_student_data(&s1);
+                            write_student_data_to_file(&s1);
                             break;
             case DISPLAYSTUDENT:
-                            display_student_data(&s1);
+                            read_all_records_from_file();
                             break;
         }
     }   
